@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:targetApi="lollipop"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMakeModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make and Model"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vin"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="@dimens/text_size_14" />
+    </LinearLayout>
+</layout>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">IBMVehicles</string>
+    <string name="make">Make and Model</string>
+    <string name="vin">Vin</string>
 </resources>
