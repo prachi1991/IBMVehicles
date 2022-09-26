@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.info.ibm.databinding.ItemHomeAdapterBinding
 import com.info.ibm.model.VehiclesResponseItem
+import java.util.*
 
 class HomeAdapter(
     private val context: Context,
@@ -26,6 +27,7 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.binding.tvMakeModel.text = vehiclesResponseItems[position].makeAndModel
+
         holder.binding.tvVin.text = vehiclesResponseItems[position].vin
         holder.binding.rlParent.setOnClickListener {
             onItemClickListner.onClick(
