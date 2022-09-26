@@ -1,16 +1,20 @@
 package com.info.ibm.view
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.info.ibm.databinding.ItemHomeAdapterBinding
 import com.info.ibm.model.VehiclesResponseItem
 
-class HomeAdapter : RecyclerView.Adapter<MainViewHolder>() {
+class HomeAdapter(
+    private val context: Context,
+    private val onItemClickListner: OnItemClickListner
+) : RecyclerView.Adapter<MainViewHolder>() {
     var vehiclesResponseItems = mutableListOf<VehiclesResponseItem>()
 
-    fun setVehiclesResponseItemList(VehiclesResponseItems: List<VehiclesResponseItem>) {
-        this.vehiclesResponseItems = VehiclesResponseItems.toMutableList()
+    fun setVehiclesResponseItemList(vehiclesResponseItems: List<VehiclesResponseItem>) {
+        this.vehiclesResponseItems = vehiclesResponseItems.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -21,13 +25,25 @@ class HomeAdapter : RecyclerView.Adapter<MainViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val vehiclesResponseItem = vehiclesResponseItems[position]
-        holder.binding.tvMakeModel.text = vehiclesResponseItem.makeAndModel
-        holder.binding.tvVin.text=vehiclesResponseItem.vin
+        holder.binding.tvMakeModel.text = vehiclesResponseItems[position].makeAndModel
+        holder.binding.tvVin.text = vehiclesResponseItems[position].vin
+        holder.binding.rlParent.setOnClickListener {
+            onItemClickListner.onClick(
+                (vehiclesResponseItems[position].vin),
+                (vehiclesResponseItems[position].makeAndModel),
+                (vehiclesResponseItems[position].color),
+                (vehiclesResponseItems[position].carType)
+            )
+        }
+
     }
 
     override fun getItemCount(): Int {
         return vehiclesResponseItems.size
+    }
+
+    interface OnItemClickListner {
+        fun onClick(str: String, strMake: String,strColor:String,strCarType:String)
     }
 }
 

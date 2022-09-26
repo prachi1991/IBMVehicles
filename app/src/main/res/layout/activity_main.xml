@@ -8,23 +8,40 @@
             type="com.info.ibm.viewmodel.MainViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Enter input"
+            android:padding="16dp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:text="Show Vehicles" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHomeCards"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_15" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
 
         <ProgressBar
             android:id="@+id/progressDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_gravity="center" />
 
 
-    </RelativeLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
