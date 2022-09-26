@@ -34,7 +34,8 @@ class HomeAdapter(
                 (vehiclesResponseItems[position].vin),
                 (vehiclesResponseItems[position].makeAndModel),
                 (vehiclesResponseItems[position].color),
-                (vehiclesResponseItems[position].carType)
+                (vehiclesResponseItems[position].carType),
+                (vehiclesResponseItems[position].kilometrage)
             )
         }
 
@@ -45,7 +46,7 @@ class HomeAdapter(
     }
 
     interface OnItemClickListner {
-        fun onClick(str: String, strMake: String,strColor:String,strCarType:String)
+        fun onClick(str: String, strMake: String,strColor:String,strCarType:String,kilometrage:Int)
     }
 }
 

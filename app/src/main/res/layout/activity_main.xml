@@ -8,6 +8,7 @@
             type="com.info.ibm.viewmodel.MainViewModel" />
     </data>
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,18 +31,27 @@
             android:layout_marginTop="16dp"
             android:padding="16dp"
             android:text="Show Vehicles" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvHomeCards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
-
         <ProgressBar
             android:id="@+id/progressDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHomeCards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

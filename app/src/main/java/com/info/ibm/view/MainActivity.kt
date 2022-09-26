@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.info.ibm.R
 import com.info.ibm.api.RetrofitInstance
 import com.info.ibm.databinding.ActivityMainBinding
@@ -19,28 +20,39 @@ import com.info.ibm.model.VehiclesResponseItem
 import com.info.ibm.repository.MainRepository
 import com.info.ibm.repository.MyViewModelFactory
 import com.info.ibm.viewmodel.MainViewModel
-import okhttp3.internal.toNonNegativeInt
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: HomeAdapter
-    private lateinit var dataList:MutableList<VehiclesResponseItem>
+    var swipeRefreshLayout: SwipeRefreshLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        swipeRefreshLayout = binding.container
         initViews()
         setAdapter()
         searchInputField()
         onShowBtnClick()
+        onSwipeRefresh()
     }
 
     private fun initViews() {
         val retrofitService = RetrofitInstance
         val mainRepository = MainRepository(retrofitService)
-        binding.viewModel = ViewModelProvider(this, MyViewModelFactory(mainRepository))[MainViewModel::class.java]
+        binding.viewModel =
+            ViewModelProvider(this, MyViewModelFactory(mainRepository))[MainViewModel::class.java]
+    }
+
+    private fun onSwipeRefresh() {
+        binding.container.setOnRefreshListener {
+
+            Toast.makeText(this@MainActivity, "Swiped", Toast.LENGTH_SHORT).show()
+            swipeRefreshLayout?.isRefreshing = false
+            callApi()
+        }
     }
 
     private fun setAdapter() {
@@ -51,13 +63,14 @@ class MainActivity : AppCompatActivity() {
                 str: String,
                 strMake: String,
                 strColor: String,
-                strCarType: String
+                strCarType: String, kilometrage: Int
             ) {
                 val intent = Intent(this@MainActivity, VehicleDetailsActivity::class.java)
                 intent.putExtra("vin", str)
                 intent.putExtra("make_and_model", strMake)
                 intent.putExtra("color", strColor)
                 intent.putExtra("car_type", strCarType)
+                intent.putExtra("kilometrage", kilometrage)
                 startActivity(intent)
             }
 
@@ -74,30 +87,36 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter input value between 1 to 100", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                binding.viewModel!!.vehicleList.observe(this, {
-                    adapter.setVehiclesResponseItemList(it)
-                })
-                binding.rvHomeCards.adapter = adapter
-
-                binding.viewModel!!.errorMessage.observe(this, {
-                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                })
-
-                binding.viewModel!!.loading.observe(this, Observer {
-                    if (it) {
-                        binding.progressDialog.visibility = View.VISIBLE
-                        binding.rvHomeCards.adapter = adapter
-
-
-                    } else {
-                        binding.progressDialog.visibility = View.GONE
-                    }
-                })
-
-                binding.viewModel!!.getAllVehiclesList()
-                binding.rvHomeCards.adapter = adapter
+                callApi()
             }
         }
+    }
+
+    private fun callApi() {
+
+        binding.viewModel!!.vehicleList.observe(this, {
+            adapter.setVehiclesResponseItemList(it)
+        })
+        binding.rvHomeCards.adapter = adapter
+
+        binding.viewModel!!.errorMessage.observe(this, {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
+
+        binding.viewModel!!.loading.observe(this, Observer {
+            if (it) {
+                binding.progressDialog.visibility = View.VISIBLE
+                binding.rvHomeCards.adapter = adapter
+
+            } else {
+                binding.progressDialog.visibility = View.GONE
+            }
+        })
+
+        binding.viewModel!!.getAllVehiclesList()
+        binding.rvHomeCards.adapter = adapter
+
+
     }
 
     private fun searchInputField() {
@@ -122,7 +141,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     fun filter(text: String?) {
         val temp: MutableList<VehiclesResponseItem> = ArrayList()
         for (d in temp) {
@@ -136,10 +154,10 @@ class MainActivity : AppCompatActivity() {
         adapter.setVehiclesResponseItemList(temp)
     }
 
-    private fun validation(){
+    private fun validation() {
         val strNumber: String = binding.edtInput.text.toString().trim()
         if (TextUtils.isEmpty(strNumber) || strNumber.toInt() > 100) {
-            Toast.makeText(this,"Enter input value between 1 to 100",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enter input value between 1 to 100", Toast.LENGTH_SHORT).show()
         }
 
     }

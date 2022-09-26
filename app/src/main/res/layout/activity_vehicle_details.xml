@@ -8,6 +8,10 @@
             type="com.info.ibm.viewmodel.MainViewModel" />
     </data>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/rlParent"
         android:layout_width="match_parent"
@@ -22,7 +26,7 @@
             android:layout_margin="4dp"
             card_view:cardCornerRadius="12dp">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
@@ -30,9 +34,9 @@
                 android:weightSum="2">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/llParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
                     android:orientation="vertical">
 
                     <TextView
@@ -80,10 +84,24 @@
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnBottomSheet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Check carbon emission" />
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
 
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
+        <include
+            android:id="@+id/bottomSheet"
+            layout="@layout/layout_bottom_sheet" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
