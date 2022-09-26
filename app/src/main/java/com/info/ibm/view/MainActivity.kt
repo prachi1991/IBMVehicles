@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun onSwipeRefresh() {
         binding.container.setOnRefreshListener {
-
             Toast.makeText(this@MainActivity, "Swiped", Toast.LENGTH_SHORT).show()
             swipeRefreshLayout?.isRefreshing = false
             callApi()
@@ -56,8 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-        binding.rvHomeCards.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvHomeCards.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapter = HomeAdapter(this, object : HomeAdapter.OnItemClickListner {
             override fun onClick(
                 str: String,
@@ -154,12 +152,12 @@ class MainActivity : AppCompatActivity() {
         adapter.setVehiclesResponseItemList(temp)
     }
 
-    private fun validation() {
+     fun validation(): Boolean {
         val strNumber: String = binding.edtInput.text.toString().trim()
         if (TextUtils.isEmpty(strNumber) || strNumber.toInt() > 100) {
             Toast.makeText(this, "Enter input value between 1 to 100", Toast.LENGTH_SHORT).show()
         }
-
+        return true
     }
 }
 

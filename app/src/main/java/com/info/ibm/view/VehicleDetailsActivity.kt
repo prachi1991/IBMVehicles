@@ -24,7 +24,12 @@ class VehicleDetailsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_vehicle_details)
 
         initBottomSheet()
+        initViews()
+        checkCarbonEmission()
 
+    }
+
+    private fun initViews() {
         data = intent.getStringExtra("vin").toString()
         dataMake = intent.getStringExtra("make_and_model").toString()
         dataColor = intent.getStringExtra("color").toString()
@@ -35,23 +40,24 @@ class VehicleDetailsActivity : AppCompatActivity() {
         binding.tvMakeModel.text = dataMake
         binding.tvColor.text = dataColor
         binding.tvCarType.text = dataType
-        val carbonEmitted = kilometrage - 5000
-        val firstKms = carbonEmitted*1.5
-        val finalKms= firstKms+5000
-
-        binding.bottomSheet.bottomSheet.tvKm.text = kilometrage.toString()+" Kilometrage"
-        binding.bottomSheet.bottomSheet.tvCarbonEmission.text=finalKms.toString()+" Carbon Emission"
-            //kilometrage.toString()
-
-
-
 
     }
+
+    fun checkCarbonEmission(): Boolean {
+        val carbonEmitted = kilometrage - 5000
+        val firstKms = carbonEmitted * 1.5
+        val finalKms = firstKms + 5000
+
+        binding.bottomSheet.bottomSheet.tvKm.text = kilometrage.toString() + " Kilometrage"
+        binding.bottomSheet.bottomSheet.tvCarbonEmission.text =
+            finalKms.toString() + " Carbon Emission"
+        return true
+    }
+
 
     private fun initBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         binding.btnBottomSheet.setOnClickListener {
-//            binding.bottomSheetKm.bottomSheet.tvKm.text= kilometrage.toString()
             if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
